@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMetricx</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --theme-teal: #00A0B0;
+            --theme-blue: #1E88E5;
+            --theme-dark-button: #3A3F44;
+            --theme-white: #FFFFFF;
+            --theme-text-dark-on-light: #333333;
+            --theme-text-light-on-dark: #FFFFFF;
+            --theme-background-light: #f9f9f9;
+            --theme-header-bg: #008a99;
+            --curve-depth: 80px; /* Depth of the curve for the hero section */
+            /* Footer Specific Variables */
+            --footer-bg: #1A1D20;
+            --footer-text-light: #b0bec5;
+            --footer-copyright-text: #90a4ae;
+
+            /* Accent Color */
+            --theme-accent-yellow: #FFC107; /* Amber/Yellow */
+
+            /* Removed light background variables for pricing cards as they are now gradient based
+            --theme-light-teal-bg: #E0F7FA;
+            --theme-light-blue-bg: #E3F2FD;
+            --theme-light-yellow-bg: #FFFDE7;
+            */
+        }
+
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--theme-white);
+            color: var(--theme-text-dark-on-light);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--theme-header-bg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #header-logo-img {
+            height: 75px;
+            width: 100px;
+            display: block;
+        }
+
+        header nav {
+            margin-left: 2rem;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        header nav ul li:first-child {
+            margin-left: 0;
+        }
+
+        header nav ul li a {
+            color: var(--theme-text-light-on-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, opacity 0.3s ease;
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a.active {
+            color: var(--theme-white);
+            opacity: 1;
+        }
+
+        .search-container {
+            margin-left: 1.5rem;
+        }
+
+        .search-container input[type="search"] {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.375rem;
+            font-size: 0.9rem;
+            min-width: 200px;
+            background-color: rgba(0, 0, 0, 0.15);
+            color: var(--theme-text-light-on-dark);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .search-container input[type="search"]::placeholder {
+            color: rgba(255, 255, 255, 0.75);
+            opacity: 1;
+        }
+        .search-container input[type="search"]:focus {
+            border-color: var(--theme-white);
+            background-color: rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        header .login-btn {
+            background-color: var(--theme-blue);
+            color: var(--theme-text-light-on-dark);
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, filter 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-left: auto;
+        }
+
+        header .login-btn:hover {
+            filter: brightness(115%);
+        }
+
+        @media (max-width: 992px) {
+            header nav { display: none; }
+            .search-container { margin-left: 0.5rem; flex-grow: 1; margin-right: 0.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            header .container { flex-wrap: wrap; }
+            .header-content-left { width: 100%; justify-content: space-between; margin-bottom: 0.5rem; }
+            .search-container { width: calc(100% - 100px); order: 3; margin-left: 0; margin-right: 0; margin-bottom: 0.5rem; }
+            header .login-btn { order: 2; margin-left: auto; }
+            #header-logo-img { height: 60px; width: auto; }
+        }
+        @media (max-width: 480px) {
+            .header-content-left { margin-bottom: 0.75rem; }
+            .search-container { width: 100%; order: 2; margin-bottom: 0.75rem; }
+            header .login-btn { width: 100%; text-align: center; margin-top: 0; order: 3; margin-left: 0; }
+        }
+
+        main {
+            flex: 1;
+        }
+
+        section { padding: 4rem 0; scroll-margin-top: 4rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+        #home {
+            background-color: var(--theme-teal);
+            color: var(--theme-text-light-on-dark);
+            position: relative;
+            clip-path: path('M0,0 H100% Vcalc(100% - var(--curve-depth)) Q50%,100% 0,calc(100% - var(--curve-depth)) Z');
+            padding-bottom: var(--curve-depth);
+        }
+        #home > .container {
+             padding-top: 2rem;
+             padding-bottom: calc(var(--curve-depth) / 2);
+        }
+
+        #home .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        #home .container > div:first-child {
+            flex: 1;
+            padding-right: 1rem; 
+        }
+        #home .container > div:last-child {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #home h2 { font-size: 3rem; color: var(--theme-text-light-on-dark); margin-bottom: 1.5rem; }
+        #home p { font-size: 1.2rem; color: var(--theme-text-light-on-dark); margin-bottom: 2rem; max-width: 100%; line-height: 1.8; opacity: 0.9; }
+        #home a.get-started-btn {
+            background-color: var(--theme-accent-yellow); 
+            color: var(--theme-text-dark-on-light); 
+            padding: 1rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; font-size: 1.1rem;
+            transition: background-color 0.3s ease, filter 0.3s ease;
+            display: inline-block;
+        }
+        #home a.get-started-btn:hover { filter: brightness(110%); } 
+        
+        #home .hero-image-container img {
+            margin-top: 2rem;
+            max-width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+        }
+
+
+        @media (min-width: 768px) {
+            #home .container {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+            }
+            #home h2 { font-size: 3.5rem; }
+            #home .hero-image-container img {
+                margin-top: 0;
+                max-width: 320px; 
+            }
+        }
+         @media (min-width: 992px) {
+             #home h2 { font-size: 4rem; }
+         }
+
+
+        #about { background-color: var(--theme-white); }
+        #about .container { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        #about img { max-width: 100%; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        #about h2 { font-size: 2.5rem; color: var(--theme-text-dark-on-light); margin-bottom: 1.5rem; }
+        #about p { font-size: 1.2rem; color: #555; margin-bottom: 2rem; line-height: 1.8; max-width: 80%; }
+        #about a {
+            background-color: var(--theme-blue);
+            color: var(--theme-text-light-on-dark); padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 600;
+            text-decoration: none; font-size: 1rem; transition: background-color 0.3s ease, filter 0.3s ease;
+        }
+        #about a:hover { filter: brightness(115%); }
+
+        @media (min-width: 768px) {
+            #about .container { flex-direction: row; text-align: left; }
+            #about img { margin-bottom: 0; margin-right: 2rem; max-width: 50%; }
+        }
+
+        #features {
+            background-color: var(--theme-background-light); 
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+        #features h2 { font-size: 2.5rem; color: var(--theme-text-dark-on-light); text-align: center; margin-bottom: 3rem; }
+        
+        .feature-card {
+            background-color: var(--theme-white);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-top-color 0.3s ease;
+            margin-bottom: 2rem;
+            border: 1px solid #e8e8e8;
+            border-top: 4px solid transparent; 
+        }
+        .feature-card:nth-of-type(3n+1) { border-top-color: var(--theme-teal); }
+        .feature-card:nth-of-type(3n+2) { border-top-color: var(--theme-blue); }
+        .feature-card:nth-of-type(3n+3) { border-top-color: var(--theme-accent-yellow); }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+        .feature-card.search-highlight-card {
+            background-color: #e0e7ff; 
+            box-shadow: 0 0 0 2px var(--theme-blue);
+        }
+        .feature-card .search-highlight-text {
+            background-color: var(--theme-accent-yellow); 
+            color: #1f2937;
+            padding: 0.1em 0.2em;
+            border-radius: 0.2em;
+        }
+
+        .feature-icon {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+        }
+        .feature-icon img {
+            height: 80px;
+            width: 80px;
+            object-fit: contain;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            color: var(--theme-text-dark-on-light);
+            margin-bottom: 0.75rem;
+        }
+        .feature-description {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (min-width: 768px) {
+            .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        }
+
+        #student-management, #staff-management, #follow-ups, #user-friendly, #reports-dashboards, #user-permissions {
+            background-color: var(--theme-white);
+            padding: 4rem 0;
+        }
+        #student-management .container, #staff-management .container, #follow-ups .container, #user-friendly .container, #reports-dashboards .container, #user-permissions .container { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        #student-management img, #staff-management img, #follow-ups img, #user-friendly img, #reports-dashboards img, #user-permissions img { max-width: 100%; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        #student-management h2, #staff-management h2, #follow-ups h2, #user-friendly h2, #reports-dashboards h2, #user-permissions h2 { font-size: 2.5rem; color: var(--theme-text-dark-on-light); margin-bottom: 1.5rem; }
+        #student-management p, #staff-management p, #follow-ups p, #user-friendly p, #reports-dashboards p, #user-permissions p { font-size: 1.1rem; color: #555; margin-bottom: 2rem; line-height: 1.8; max-width: 80%; }
+
+        @media (min-width: 768px) {
+            #student-management .container, #staff-management .container, #follow-ups .container, #user-friendly .container, #reports-dashboards .container, #user-permissions .container { flex-direction: row; text-align: left; }
+            #student-management img, #staff-management img, #follow-ups img, #user-friendly img, #reports-dashboards img, #user-permissions img { margin-bottom: 0; margin-right: 2rem; max-width: 50%; }
+        }
+
+        /* === UPDATED PRICING SECTION CSS === */
+        #pricing {
+            background-color: var(--theme-background-light);
+            padding: 4rem 0;
+        }
+        #pricing h2 {
+            font-size: 2.5rem;
+            color: var(--theme-text-dark-on-light);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-card {
+            border-radius: 1rem; /* More rounded corners */
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            border: none; /* Remove the border */
+            color: var(--theme-white); /* Light text on gradient - default for all cards */
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Gradient Backgrounds */
+        .pricing-card:nth-child(1) {
+            background: linear-gradient(135deg, #9c27b0 0%, #e040fb 100%); /* Purple to Pink */
+        
+        }
+
+        .pricing-card:nth-child(2) {
+            background: linear-gradient(135deg, #e91e63 0%, #f48fb1 100%); /* Pink to Light Pink */
+        }
+
+        .pricing-card:nth-child(3) {
+            background: linear-gradient(135deg, #009688 0%, #80cbc4 100%); /* Teal to Light Teal */
+        }
+
+        .pricing-title {
+            font-size: 1.75rem; /* Slightly larger title */
+            margin-bottom: 1.25rem;
+            color: inherit; /* Inherit text color from the card */
+        }
+
+        .pricing-price {
+            font-size: 2.75rem; /* Larger price */
+            font-weight: 700;
+            margin-bottom: 1.75rem;
+            color: inherit; /* Inherit text color from the card */
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 0.75rem;
+            color: inherit; /* Inherit text color from the card */
+            opacity: 0.9;
+        }
+
+        .order-button {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Button Colors - Contrasting with the gradient */
+        .pricing-card:nth-child(1) .order-button {
+            background-color: #130fea; /* Pink */
+            color: var(--theme-white);
+        }
+        .pricing-card:nth-child(1) .order-button:hover { filter: brightness(110%); }
+
+        .pricing-card:nth-child(2) .order-button {
+            background-color: #3e1da1; /* Purple */
+            color: var(--theme-white);
+        }
+        .pricing-card:nth-child(2) .order-button:hover { filter: brightness(110%); }
+
+        .pricing-card:nth-child(3) .order-button {
+            background-color: #551adf; /* Light Teal */
+            color: var(--theme-white); /* Text color for this button, can be var(--theme-text-dark-on-light) if contrast is better */
+        }
+        .pricing-card:nth-child(3) .order-button:hover { filter: brightness(110%); }
+        /* === END OF UPDATED PRICING SECTION CSS === */
+
+
+        #contact { background-color: var(--theme-white); padding: 4rem 0; }
+        #contact .container { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        #contact h2 { font-size: 2.5rem; color: var(--theme-text-dark-on-light); margin-bottom: 1.5rem; max-width: 80%; }
+        .contact-form { background-color: var(--theme-background-light); border-radius: 0.5rem; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; margin-top: 2rem; }
+        .contact-form form { display: flex; flex-direction: column; }
+        .contact-form .form-group { margin-bottom: 1.5rem; text-align: left; }
+        .contact-form label { display: block; font-size: 1rem; color: #555; margin-bottom: 0.5rem; font-weight: 600; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 0.75rem; border-radius: 0.375rem; border: 1px solid #ddd;
+            font-size: 1rem; color: var(--theme-text-dark-on-light); transition: border-color 0.2s ease; outline: none; box-sizing: border-box;
+        }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--theme-blue); box-shadow: 0 0 0 3px rgba(30, 136, 229,0.15); }
+        .contact-form textarea { height: 10rem; resize: vertical; }
+        .contact-form button {
+            background-color: var(--theme-blue); color: var(--theme-text-light-on-dark); padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; font-weight: 600; text-decoration: none; font-size: 1rem;
+            transition: background-color 0.3s ease, filter 0.3s ease; border: none; cursor: pointer; width: 100%;
+        }
+        .contact-form button:hover { filter: brightness(115%); }
+
+        @media (min-width: 768px) {
+            #contact .container { flex-direction: row; text-align: left; justify-content: space-between; align-items: flex-start; }
+            #contact .container > h2 { max-width: 45%; margin-bottom: 0; }
+            #contact .container > div:not(.contact-form) { max-width: 45%; }
+            .contact-form { margin-top: 0; margin-left: 2rem; max-width: 45%; }
+            #contact .container img { max-width: 100%; margin-left: 0; }
+        }
+
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text-light);
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        .footer .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .footer-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--theme-blue);
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-nav-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .footer-nav-links a {
+            color: var(--footer-text-light);
+            text-decoration: none;
+            margin: 0.5rem 1.25rem;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        .footer-nav-links a:hover {
+            color: var(--theme-teal);
+        }
+
+        .footer-copyright {
+            font-size: 0.9rem;
+            color: var(--footer-copyright-text);
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="font-inter">
+    <header>
+        <div class="container">
+            <div class="header-content-left">
+                <a href="#home" class="header-logo-link" aria-label="EduMetricx Home">
+                    <img src="https://www.edumetricx.com/assets_front/edumetricx.png" alt="EduMetricx Logo" id="header-logo-img">
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="active">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="search-container">
+                    <input type="search" id="pageSearchInput" placeholder="Search features..." onkeyup="searchContent()">
+                </div>
+            </div>
+            <a href="Login.html" class="login-btn">Login</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home">
+            <div class="container">
+                <div>
+                    <h2>Best Software for your Educational Institutions</h2>
+                    <p>EduMetricx has features to add enquiry followups, payment reminders and more.</p>
+                    <a href="#features" class="get-started-btn">Get Started</a>
+                </div>
+                <div class="hero-image-container">
+                    
+                    <img src="https://www.edumetricx.com/assets_front/img/showcase.jpg" alt="EduMetricx App on Phone">
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <div>
+                    <img src="https://www.edumetricx.com/assets_front/img/showcase.jpg" alt="Institution Integration Showcase">
+                </div>
+                <div>
+                    <h2>All Kinds of Institutions Integration Tool</h2>
+                    <p>EduMetricx is a powerful business intelligent automation software which can automate your Manual Institution Processes, save time, increase your business ROI in Minutes.</p>
+                    <a href="#features">See Addons</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2>Our Main Features</h2>
+                <div class="grid-container" id="featuresGrid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://www.edumetricx.com/assets_front/img/icons/payment.png" alt="Globally Accessible Icon">
+                        </div>
+                        <h3 class="feature-title">Globally Accessible</h3>
+                        <p class="feature-description">We know that effective communication is at the heart of business success. You can access our software globally.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://www.edumetricx.com/assets_front/img/icons/customizable.png" alt="Easily Customizable Icon">
+                        </div>
+                        <h3 class="feature-title">Easily Customizable</h3>
+                        <p class="feature-description">Our software is simple-to-use, easy-to-find, and easily edited. This allows the user a one-click way to customize data.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="https://www.edumetricx.com/assets_front/img/icons/concept.png" alt="Multi Login Icon">
+                        </div>
+                        <h3 class="feature-title">Multi Login</h3>
+                        <p class="feature-description">Our software comes with multi login such as admin, staff, and accountant logins with access rights.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="student-management">
+            <div class="container">
+                <div>
+                    <h2>Student Management</h2>
+                    <p>The student module enables you to store all information like which course has been taken, Payment history, Follow-ups the complete history of a student.</p>
+                </div>
+                <div>
+                    <img src="https://www.edumetricx.com/assets_front/img/app_preview_2%20.jpg" alt="Student Management Preview">
+                </div>
+            </div>
+        </section>
+
+        <section id="staff-management">
+            <div class="container">
+                <div>
+                    <img src="https://www.barrister.com/wp-content/uploads/2016/08/staff_augmentation.jpg" alt="Staff Management Feature"height="300px" width="300px">
+                </div>
+                <div>
+                    <h2>Staff Management</h2>
+                    <p>Staff module enables you to store all information like Date of joining, attendance and performance. The data is also maintained for future reference.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="follow-ups">
+            <div class="container">
+                <div>
+                    <h2>Follow Ups</h2>
+                    <p>Follow-up module gives you exact status like when to call and reminding about payment collections which Increases ROI.</p>
+                </div>
+                <div>
+                    <img src="https://www.edumetricx.com/assets_front/img/app_preview_4.jpg" alt="Follow Ups Preview"height="200px" width="200px">
+                </div>
+            </div>
+        </section>
+
+        <section id="user-friendly">
+            <div class="container">
+                <div>
+                    <img src="https://www.edumetricx.com/assets_front/img/illustration_contact.svg" alt="User Friendly Interface">
+                </div>
+                <div>
+                    <h2>User Friendly</h2>
+                    <p>Our Software User Interface is well-organized, making each user to navigate different tools and options easily.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="reports-dashboards">
+            <div class="container">
+                <div>
+                    <h2>Reports and Dashboards</h2>
+                    <p>With our Fresh User Interface, Reports and Dashboards provide the answers to the questions which are important for an organization/business to run.</p>
+                </div>
+                <div>
+                    <img src="https://www.edumetricx.com/assets_front/img/app_preview_2%20.jpg" alt="Reports and Dashboards Preview">
+                </div>
+            </div>
+        </section>
+
+        <section id="user-permissions">
+            <div class="container">
+                <div>
+                    <img src="https://www.edumetricx.com/assets_front/img/illustration_contact.svg" alt="User Permissions Feature">
+                </div>
+                <div>
+                    <h2>User Permissions</h2>
+                    <p>The authorization given to users that enables them to access specific resources on the software, such as Telecallers and Counsellor logins.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing">
+            <div class="container">
+                <h2>Pricing</h2>
+                <div class="grid-container">
+                    <div class="pricing-card"> <h3 class="pricing-title">Monthly Plan</h3>
+                        <p class="pricing-price">Rs899</p>
+                        <ul class="pricing-features">
+                            <li>Unlimited Space</li>
+                            <li>Unlimited Logins</li>
+                            <li>399 SMS Balance</li>
+                            <li>Live Support</li>
+                            <li>Customizable</li>
+                        </ul>
+                        <a href="#contact" class="order-button">Order Now</a>
+                    </div>
+                    <div class="pricing-card"> <h3 class="pricing-title">6Months Plan</h3>
+                        <p class="pricing-price">Rs4599</p>
+                        <ul class="pricing-features">
+                            <li>Unlimited Space</li>
+                            <li>Unlimited Logins</li>
+                            <li>1000 SMS Balance</li>
+                            <li>Live Support</li>
+                            <li>Customizable</li>
+                        </ul>
+                        <a href="#contact" class="order-button">Order Now</a>
+                    </div>
+                    <div class="pricing-card"> <h3 class="pricing-title">Yearly Plan</h3>
+                        <p class="pricing-price">Rs7999</p>
+                        <ul class="pricing-features">
+                            <li>Unlimited Space</li>
+                            <li>Unlimited Logins</li>
+                            <li>2500 SMS Balance</li>
+                            <li>Live Support</li>
+                            <li>Customizable</li>
+                        </ul>
+                        <a href="#contact" class="order-button">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2>Need a help? Don't worry just contact us</h2>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="fullname">Fullname</label>
+                            <input type="text" id="fullname" name="fullname" placeholder="Your Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-title">EduMetricx</h3>
+            <p class="footer-description">EduMetricx is a powerful business intelligent automation software which can automate your Manual Institution Processes, save time, increase your business ROI in Minutes.</p>
+            <div class="footer-nav-links">
+                <a href="#home">Home</a>
+                <a href="#features">Key Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p class="footer-copyright">© 2021 Edu Metricx. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    let headerHeight = 0;
+                    const headerElement = document.querySelector('header');
+                    if (headerElement) { headerHeight = headerElement.offsetHeight; }
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Highlight active navigation link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('main section[id]');
+            const navLinks = document.querySelectorAll('header nav ul li a');
+            let headerHeight = 0;
+            const headerElement = document.querySelector('header');
+            if (headerElement) { headerHeight = headerElement.offsetHeight; }
+            
+            let currentSectionId = 'home';
+            const scrollPosition = window.pageYOffset;
+
+            let matched = false;
+            if (scrollPosition < (sections.length > 0 ? (sections[0].offsetTop - headerHeight - 20) : window.innerHeight)) {
+                currentSectionId = 'home';
+                matched = true;
+            } else {
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    const section = sections[i];
+                    const sectionTop = section.offsetTop - headerHeight - 20;
+                    if (scrollPosition >= sectionTop) {
+                        currentSectionId = section.getAttribute('id');
+                        matched = true;
+                        break;
+                    }
+                }
+            }
+             if (!matched && sections.length > 0) { // If scrolled past all sections, keep last one active
+                 currentSectionId = sections[sections.length -1].getAttribute('id');
+             }
+
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') && link.getAttribute('href').slice(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const homeLink = document.querySelector('header nav ul li a[href="#home"]');
+            if(homeLink && (window.location.hash === "" || window.location.hash === "#home")) {
+                 homeLink.classList.add('active');
+            }
+            // Initial check
+            window.dispatchEvent(new Event('scroll'));
+        });
+
+        // Search Functionality
+        function searchContent() {
+            let input = document.getElementById('pageSearchInput');
+            let filter = input.value.toUpperCase().trim();
+            let featuresGrid = document.getElementById('featuresGrid');
+            let featureCards = featuresGrid.getElementsByClassName('feature-card');
+            let noResultsFound = true;
+
+            for (let i = 0; i < featureCards.length; i++) {
+                let card = featureCards[i];
+                let titleElement = card.querySelector(".feature-title");
+                let descriptionElement = card.querySelector(".feature-description");
+                
+                if (!card.originalTitleHTML) card.originalTitleHTML = titleElement.innerHTML;
+                if (!card.originalDescriptionHTML) card.originalDescriptionHTML = descriptionElement.innerHTML;
+
+                titleElement.innerHTML = card.originalTitleHTML;
+                descriptionElement.innerHTML = card.originalDescriptionHTML;
+                card.classList.remove('search-highlight-card');
+                card.style.display = "";
+
+                if (filter === "") {
+                    noResultsFound = false;
+                    continue;
+                }
+
+                let titleText = titleElement.textContent || titleElement.innerText;
+                let descriptionText = descriptionElement.textContent || descriptionElement.innerText;
+                let titleMatches = titleText.toUpperCase().indexOf(filter) > -1;
+                let descriptionMatches = descriptionText.toUpperCase().indexOf(filter) > -1;
+
+                if (titleMatches || descriptionMatches) {
+                    card.style.display = "";
+                    card.classList.add('search-highlight-card');
+                    noResultsFound = false;
+                    if (titleMatches) {
+                        let regExp = new RegExp(input.value.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                        titleElement.innerHTML = titleText.replace(regExp, '<span class="search-highlight-text">$&</span>');
+                    }
+                    if (descriptionMatches) {
+                        let regExp = new RegExp(input.value.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                        descriptionElement.innerHTML = descriptionText.replace(regExp, '<span class="search-highlight-text">$&</span>');
+                    }
+                } else {
+                    card.style.display = "none";
+                }
+            }
+            
+            let noResultsMessage = featuresGrid.querySelector('.no-results-message');
+            if (noResultsFound && filter !== "") {
+                if (!noResultsMessage) {
+                    noResultsMessage = document.createElement('p');
+                    noResultsMessage.className = 'no-results-message';
+                    noResultsMessage.style.textAlign = 'center';
+                    noResultsMessage.style.gridColumn = '1 / -1';
+                    noResultsMessage.style.marginTop = '1rem';
+                    noResultsMessage.style.color = 'var(--theme-text-dark-on-light)';
+                    featuresGrid.appendChild(noResultsMessage);
+                }
+                noResultsMessage.textContent = "No features found matching your search.";
+            } else if (noResultsMessage) {
+                noResultsMessage.remove();
+            }
+        }
+    </script>
+</body>
+</html>
